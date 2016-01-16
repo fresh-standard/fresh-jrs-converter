@@ -17,4 +17,6 @@ var jrsResume = conv.toJRS( resume );
 
 ## License
 
-MIT. See [LICENSE.md][1] for details.
+MIT. See [LICENSE.md][lic] for details.
+
+[lic]: https://github.com/fluentdesk/fresh-jrs-converter/blob/master/LICENSE.md
