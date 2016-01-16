@@ -1,6 +1,6 @@
 {
   "name": "fresh-jrs-converter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert résumés and CVs between FRESH and JSON Resume formats.",
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
 }
