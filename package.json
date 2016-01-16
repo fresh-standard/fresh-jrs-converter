@@ -1,0 +1,34 @@
+{
+  "name": "fresh-jrs-converter",
+  "version": "0.1.0",
+  "description": "Convert résumés and CVs between FRESH and JSON Resume formats.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fluentdesk/fresh-jrs-converter.git"
+  },
+  "keywords": [
+    "resume",
+    "résumé",
+    "CV",
+    "FRESH",
+    "FRESCA",
+    "JSON Resume",
+    "JRS",
+    "JSON",
+    "schema"
+  ],
+  "author": "hacksalot <hacksalot@indevious.com> (https://github.com/hacksalot)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fluentdesk/fresh-jrs-converter/issues"
+  },
+  "main": "src/index.js",
+  "homepage": "https://github.com/fluentdesk/fresh-jrs-converter",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
