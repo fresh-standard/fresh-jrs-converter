@@ -23,6 +23,10 @@
     "url": "https://github.com/fluentdesk/fresh-jrs-converter/issues"
   },
   "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "grunt": "grunt"
+  },
   "homepage": "https://github.com/fluentdesk/fresh-jrs-converter",
   "ignore": [
     "**/.*",
