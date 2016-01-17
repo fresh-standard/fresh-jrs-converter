@@ -11,12 +11,23 @@ FRESH to JSON Resume conversion routiens.
 
 
   var _ = require('underscore');
-  var sect = require('./sections');
+  var sect = {
+    jrs: require('./to-jrs'),
+    fresh: require('./to-fresh')
+  };
 
 
 
   /**
   Convert between FRESH and JRS resume/CV formats.
+  We could do this with an object mapper like [node-object-mapper][o1]
+  or [explicitobjectmap-node][o2] but in practice we end up needing a lot
+  of custom conversion code anyway (defeating the purpose of an object
+  mapper) or else we end up creating specific rules or having to do
+  multipass conversions, etc, because of idiosyncracies in the mapping
+  libraries and the FRESH/JRS formats.
+  [o1]: https://github.com/wankdanker/node-object-mapper
+  [o2]: https://github.com/opentable/explicitobjectmap-node
   @class FRESHConverter
   */
   var FRESHConverter = module.exports = {
@@ -31,14 +42,6 @@ FRESH to JSON Resume conversion routiens.
     toFRESH: function( src, foreign ) {
 
       foreign = (foreign === undefined || foreign === null) ? true : foreign;
-
-      var ret = _.mapObject( src, function( val, key ) {
-
-        // Underscore will hand us every top-level key in the object, most
-        // of which are resume sections / sub-objects
-
-      });
-
 
       return {
         name: src.basics.name,
@@ -55,7 +58,7 @@ FRESH to JSON Resume conversion routiens.
           website: src.basics.website,
           other: src.basics.other // <--> round-trip
         },
-        meta: sect.meta( true, src.meta ),
+        meta: sect.fresh.meta( src, src.meta ),
         location: {
           city: src.basics.location.city,
           region: src.basics.location.region,
@@ -63,15 +66,15 @@ FRESH to JSON Resume conversion routiens.
           code: src.basics.location.postalCode,
           address: src.basics.location.address
         },
-        employment: sect.employment( src.work, true ),
-        education: sect.education( src.education, true),
-        service: sect.service( src.volunteer, true),
-        skills: sect.skillsToFRESH( src.skills ),
-        writing: sect.writing( src.publications, true),
-        recognition: sect.recognition( src.awards, true, foreign ),
-        social: sect.social( src.basics.profiles, true ),
+        employment: sect.fresh.employment( src, src.work ),
+        education: sect.fresh.education( src, src.education ),
+        service: sect.fresh.service( src, src.volunteer ),
+        skills: sect.fresh.skills( src, src.skills ),
+        writing: sect.fresh.writing( src, src.publications ),
+        recognition: sect.fresh.recognition( src, src.awards ),
+        social: sect.fresh.social( src, src.basics.profiles ),
         interests: src.interests,
-        testimonials: sect.references( src.references, true ),
+        testimonials: sect.fresh.testimonials( src, src.references ),
         languages: src.languages,
         disposition: src.disposition // <--> round-trip
       };
@@ -106,19 +109,19 @@ FRESH to JSON Resume conversion routiens.
             countryCode: src.location.country,
             region: src.location.region
           },
-          profiles: sect.social( src.social, false ),
+          profiles: sect.jrs.social( src, src.social ),
           imp: src.imp
         },
-        work: sect.employment( src.employment, false ),
-        education: sect.education( src.education, false ),
-        skills: sect.skillsToJRS( src.skills, false ),
-        volunteer: sect.service( src.service, false ),
-        awards: sect.recognition( src.recognition, false, foreign ),
-        publications: sect.writing( src.writing, false ),
+        work: sect.jrs.work( src, src.employment ),
+        education: sect.jrs.education( src, src.education ),
+        skills: sect.jrs.skills( src, src.skills ),
+        volunteer: sect.jrs.volunteer( src, src.service ),
+        awards: sect.jrs.awards( src, src.recognition ),
+        publications: sect.jrs.publications( src, src.writing ),
         interests: src.interests,
-        references: sect.references( src.testimonials, false ),
-        samples: foreign ? src.samples : undefined,
-        disposition: foreign ? src.disposition : undefined,
+        references: sect.jrs.references( src, src.testimonials ),
+        samples: src.samples,
+        disposition: src.disposition,  // <--> round-trip
         languages: src.languages
       };
 
