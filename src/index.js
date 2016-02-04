@@ -120,8 +120,6 @@ FRESH to JSON Resume conversion routiens.
         publications: sect.jrs.publications( src, src.writing ),
         interests: src.interests,
         references: sect.jrs.references( src, src.testimonials ),
-        samples: src.samples,
-        disposition: src.disposition,  // <--> round-trip
         languages: src.languages
       };
 
