@@ -7,12 +7,13 @@ Convert JRS resume sections to FRESH.
 (function(){
 
   __ = require('lodash');
+  PKG = require('../package.json');
 
   module.exports = {
 
     meta: function( r, obj ) {
       obj = obj || { };
-      obj.format = obj.format || "FRESH@0.1.0";
+      obj.format = obj.format || "FRESH@" + PKG.devDependencies.fresca;
       obj.version = obj.version || "0.1.0";
       return obj;
     },
