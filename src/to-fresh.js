@@ -6,6 +6,8 @@ Convert JRS resume sections to FRESH.
 
 (function(){
 
+  __ = require('lodash');
+
   module.exports = {
 
     meta: function( r, obj ) {
@@ -13,6 +15,28 @@ Convert JRS resume sections to FRESH.
       obj.format = obj.format || "FRESH@0.1.0";
       obj.version = obj.version || "0.1.0";
       return obj;
+    },
+
+    info: function( r, obj ) {
+      if( !obj ) return { };
+      var ref = r.basics || { };
+      return {
+        label: ref.label,
+        class: ref.class,// round-trip
+        image: ref.picture,
+        brief: ref.summary
+      };
+    },
+
+    contact: function( r, obj ) {
+      if( !obj ) return obj;
+      var ref = r.basics || { };
+      return {
+        email: ref.email,
+        phone: ref.phone,
+        website: ref.website,
+        other: ref.other // <--> round-trip
+      };
     },
 
     employment: function( r, obj ) {
@@ -140,6 +164,18 @@ Convert JRS resume sections to FRESH.
           private: false
         };
       });
+    },
+
+
+    location: function( r, obj ) {
+      if ( !obj ) return obj;
+      return {
+        city: obj.city,
+        region: obj.region,
+        country: obj.countryCode,
+        code: obj.postalCode,
+        address: obj.address
+      };
     }
 
 

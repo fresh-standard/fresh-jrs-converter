@@ -1,16 +1,17 @@
 /**
-FRESH to JSON Resume conversion routiens.
+FRESH to JSON Resume conversion routines.
 @license MIT. See LICENSE.md for details.
 @module index.js
 */
 
 
 
-(function(){ // TODO: refactor everything
+(function() {
 
 
 
   var _ = require('underscore');
+  var __ = require('lodash');
   var sect = {
     jrs: require('./to-jrs'),
     fresh: require('./to-fresh')
@@ -46,26 +47,10 @@ FRESH to JSON Resume conversion routiens.
       return {
         name: src.basics.name,
         imp: src.basics.imp,
-        info: {
-          label: src.basics.label,
-          class: src.basics.class, // <--> round-trip
-          image: src.basics.picture,
-          brief: src.basics.summary
-        },
-        contact: {
-          email: src.basics.email,
-          phone: src.basics.phone,
-          website: src.basics.website,
-          other: src.basics.other // <--> round-trip
-        },
+        info: sect.fresh.info( src, src.info ),
+        contact: sect.fresh.contact( src, src.contact ),
         meta: sect.fresh.meta( src, src.meta ),
-        location: {
-          city: src.basics.location.city,
-          region: src.basics.location.region,
-          country: src.basics.location.countryCode,
-          code: src.basics.location.postalCode,
-          address: src.basics.location.address
-        },
+        location: sect.fresh.location( src, __.get( src, 'basics.location' ) ),
         employment: sect.fresh.employment( src, src.work ),
         education: sect.fresh.education( src, src.education ),
         service: sect.fresh.service( src, src.volunteer ),
@@ -93,25 +78,7 @@ FRESH to JSON Resume conversion routiens.
       foreign = (foreign === undefined || foreign === null) ? false : foreign;
 
       return {
-        basics: {
-          name: src.name,
-          label: src.info.label,
-          class: foreign ? src.info.class : undefined,
-          summary: src.info.brief,
-          website: src.contact.website,
-          phone: src.contact.phone,
-          email: src.contact.email,
-          picture: src.info.image,
-          location: {
-            address: src.location.address,
-            postalCode: src.location.code,
-            city: src.location.city,
-            countryCode: src.location.country,
-            region: src.location.region
-          },
-          profiles: sect.jrs.social( src, src.social ),
-          imp: src.imp
-        },
+        basics: sect.jrs.basics( src ),
         work: sect.jrs.work( src, src.employment ),
         education: sect.jrs.education( src, src.education ),
         skills: sect.jrs.skills( src, src.skills ),

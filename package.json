@@ -36,6 +36,7 @@
     "tests"
   ],
   "dependencies": {
+    "lodash": "^4.3.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
