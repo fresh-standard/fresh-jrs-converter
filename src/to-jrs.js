@@ -166,7 +166,7 @@ Convert FRESH resume sections to JRS.
       return obj.map(function(pro){
         return {
           name: pro.title,
-          description: pro.description,
+          description: pro.description || pro.summary,
           highlights: pro.highlights,
           keywords: pro.keywords,
           startDate: pro.start,
