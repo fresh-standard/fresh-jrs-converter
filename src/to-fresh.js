@@ -71,6 +71,7 @@ Convert JRS resume sections to FRESH.
             start: edu.startDate,
             end: edu.endDate,
             grade: edu.gpa,
+            title: edu.title,
             curriculum: edu.courses,
             url: edu.website || edu.url || undefined,
             summary: edu.summary || "",
