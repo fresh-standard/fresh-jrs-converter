@@ -46,9 +46,8 @@ FRESH to JSON Resume conversion routines.
 
       return {
         name: src.basics.name,
-        imp: src.basics.imp,
-        info: sect.fresh.info( src, src.info ),
-        contact: sect.fresh.contact( src, src.contact ),
+        info: sect.fresh.info( src, src.basics ),
+        contact: sect.fresh.contact( src, src.basics ),
         meta: sect.fresh.meta( src, src.meta ),
         location: sect.fresh.location( src, __.get( src, 'basics.location' ) ),
         employment: sect.fresh.employment( src, src.work ),
