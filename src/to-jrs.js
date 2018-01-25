@@ -159,8 +159,23 @@ Convert FRESH resume sections to JRS.
         countryCode: obj.country,
         region: obj.region
       };
-    }
+    },
 
+    projects: function( r, obj ) {
+      if( !obj ) return obj;
+      return obj.map(function(pro){
+        return {
+          name: pro.title,
+          description: pro.description || pro.summary,
+          highlights: pro.highlights,
+          keywords: pro.keywords,
+          startDate: pro.start,
+          endDate: pro.end,
+          url: pro.url,
+          roles: [pro.role]
+        };
+      });
+    }
 
   };
 }());

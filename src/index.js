@@ -87,7 +87,8 @@ FRESH to JSON Resume conversion routines.
         publications: sect.jrs.publications( src, src.writing ),
         interests: src.interests,
         references: sect.jrs.references( src, src.testimonials ),
-        languages: src.languages
+        languages: src.languages,
+        projects: sect.jrs.projects( src, src.projects )
       };
 
     },
