@@ -65,26 +65,52 @@ FRESH to JSON Resume conversion routines.
 
 
     /**
-    Convert from FRESH format to JSON Resume.
-    @param foreign True if non-JSON-Resume properties should be included in
-    the result, false if those properties should be excluded.
-    @todo Refactor
+    Convert from FRESH format to a specific JSON Resume format.
+    @param src The source FRESH resume object.
+    @param foreign Currently unused.
+    @param ver The JSON Resume version. If specified, must be "0", "1", or
+    "edge". If omitted, defaults to "edge" (the latest JSON Resume schema).
+    @returns The converted resume object in JSON Resume format.
     */
-    toJRS: function( src, foreign ) {
+    toJRS: function( src, foreign, ver ) {
 
-      return {
-        basics: sect.jrs.basics( src ),
-        work: sect.jrs.work( src, src.employment ),
-        education: sect.jrs.education( src, src.education ),
-        skills: sect.jrs.skills( src, src.skills ),
-        volunteer: sect.jrs.volunteer( src, src.service ),
-        awards: sect.jrs.awards( src, src.recognition ),
-        publications: sect.jrs.publications( src, src.writing ),
-        interests: src.interests,
-        references: sect.jrs.references( src, src.testimonials ),
-        languages: src.languages,
-        projects: sect.jrs.projects( src, src.projects )
-      };
+      switch( ver || "edge" ) {
+
+        case "0":
+          return {
+            basics: sect.jrs.basics( src ),
+            work: sect.jrs.work( src, src.employment ),
+            education: sect.jrs.education( src, src.education ),
+            skills: sect.jrs.skills( src, src.skills ),
+            volunteer: sect.jrs.volunteer( src, src.service ),
+            awards: sect.jrs.awards( src, src.recognition ),
+            publications: sect.jrs.publications( src, src.writing ),
+            interests: src.interests,
+            references: sect.jrs.references( src, src.testimonials ),
+            languages: src.languages
+          };
+
+        case "1":
+        case "edge":
+          return {
+            meta: null,
+            basics: sect.jrs.basics( src ),
+            work: sect.jrs.work( src, src.employment ),
+            education: sect.jrs.education( src, src.education ),
+            projects: sect.jrs.projects( src, src.projects ),
+            skills: sect.jrs.skills( src, src.skills ),
+            volunteer: sect.jrs.volunteer( src, src.service ),
+            awards: sect.jrs.awards( src, src.recognition ),
+            publications: sect.jrs.publications( src, src.writing ),
+            interests: src.interests,
+            references: sect.jrs.references( src, src.testimonials ),
+            languages: src.languages
+          };
+
+        default:
+          // TODO: error
+          return null;
+      }
 
     },
 

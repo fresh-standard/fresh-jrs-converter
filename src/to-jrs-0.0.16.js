@@ -1,5 +1,5 @@
 /**
-Convert FRESH resume sections to JRS.
+Convert FRESH resume sections to JRS 0.0.16.
 @module to-jrs.js
 @license MIT. See LICENSE.md for details.
 */
@@ -9,8 +9,7 @@ Convert FRESH resume sections to JRS.
   _ = require('lodash');
 
   /**
-  A dedicated FRESH-to-JRS resume converter for the latest JRS (1.0.0 candidate)
-  resumes.
+  A dedicated FRESH-to-JRS resume converter for JRS 0.0.16 resumes.
   */
   module.exports = {
 
@@ -163,23 +162,23 @@ Convert FRESH resume sections to JRS.
         countryCode: obj.country,
         region: obj.region
       };
-    },
-
-    projects: function( r, obj ) {
-      if( !obj ) return obj;
-      return obj.map(function(pro){
-        return {
-          name: pro.title,
-          description: pro.description || pro.summary,
-          highlights: pro.highlights,
-          keywords: pro.keywords,
-          startDate: pro.start,
-          endDate: pro.end,
-          url: pro.url,
-          roles: [pro.role]
-        };
-      });
     }
+
+    // projects: function( r, obj ) {
+    //   if( !obj ) return obj;
+    //   return obj.map(function(pro){
+    //     return {
+    //       name: pro.title,
+    //       description: pro.description || pro.summary,
+    //       highlights: pro.highlights,
+    //       keywords: pro.keywords,
+    //       startDate: pro.start,
+    //       endDate: pro.end,
+    //       url: pro.url,
+    //       roles: [pro.role]
+    //     };
+    //   });
+    // }
 
   };
 }());
