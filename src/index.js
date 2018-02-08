@@ -42,8 +42,6 @@ FRESH to JSON Resume conversion routines.
     */
     toFRESH: function( src, foreign ) {
 
-      foreign = (foreign === undefined || foreign === null) ? true : foreign;
-
       return {
         name: src.basics.name,
         info: sect.fresh.info( src, src.basics ),
@@ -73,8 +71,6 @@ FRESH to JSON Resume conversion routines.
     @todo Refactor
     */
     toJRS: function( src, foreign ) {
-
-      foreign = (foreign === undefined || foreign === null) ? false : foreign;
 
       return {
         basics: sect.jrs.basics( src ),
