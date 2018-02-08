@@ -38,7 +38,7 @@ var jrsResume = converter.toJRS( resume );
 
 ## License
 
-MIT. See [LICENSE.md][lic] for details.
+MIT. See [LICENSE.txt][lic] for details.
 
 [lic]: LICENSE.txt
 [img-release]: https://img.shields.io/github/release/fresh-standard/fresh-jrs-converter.svg?label=version
