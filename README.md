@@ -40,7 +40,7 @@ var jrsResume = converter.toJRS( resume );
 
 MIT. See [LICENSE.md][lic] for details.
 
-[lic]: https://github.com/fresh-standard/fresh-jrs-converter/blob/master/LICENSE.txt
+[lic]: LICENSE.txt
 [img-release]: https://img.shields.io/github/release/fresh-standard/fresh-jrs-converter.svg?label=version
 [img-master]: https://img.shields.io/travis/fresh-standard/fresh-jrs-converter/master.svg
 [travis-url-master]: https://travis-ci.org/fresh-standard/fresh-jrs-converter?branch=master
