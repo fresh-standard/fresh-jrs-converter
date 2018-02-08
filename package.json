@@ -12,6 +12,7 @@
     "CV",
     "FRESH",
     "FRESCA",
+    "FRESH Resume",
     "JSON Resume",
     "JRS",
     "JSON",
@@ -36,12 +37,12 @@
     "tests"
   ],
   "dependencies": {
+    "fresh-resume-schema": "^1.0.0-beta",
     "lodash": "^4.3.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "chai": "^3.4.1",
-    "fresca": "0.6.0",
     "fresh-test-resumes": "0.7.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
