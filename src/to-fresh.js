@@ -6,7 +6,6 @@ Convert JRS resume sections to FRESH.
 
 (function(){
 
-  __ = require('lodash');
   PKG = require('../package.json');
 
   module.exports = {

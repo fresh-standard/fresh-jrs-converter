@@ -6,7 +6,7 @@ Convert FRESH resume sections to JRS.
 
 (function(){
 
-  __ = require('lodash');
+  _ = require('lodash');
 
   module.exports = {
 
@@ -14,13 +14,13 @@ Convert FRESH resume sections to JRS.
       var that = this;
       return {
         name: r.name,
-        label: __.get( r, 'info.label' ),
-        class: __.get( r, 'info.class' ),
-        summary: __.get( r, 'info.brief' ),
-        website: __.get( r, 'contact.website' ),
-        phone: __.get( r, 'contact.phone' ),
-        email: __.get( r, 'contact.email' ),
-        picture: __.get( r, 'info.image' ),
+        label: _.get( r, 'info.label' ),
+        class: _.get( r, 'info.class' ),
+        summary: _.get( r, 'info.brief' ),
+        website: _.get( r, 'contact.website' ),
+        phone: _.get( r, 'contact.phone' ),
+        email: _.get( r, 'contact.email' ),
+        picture: _.get( r, 'info.image' ),
         location: that.location( r, r.location ),
         profiles: that.social( r, r.social ),
         imp: r.imp
