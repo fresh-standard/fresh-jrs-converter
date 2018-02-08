@@ -11,34 +11,10 @@ var chai = require('chai')
   , validator = require('is-my-json-valid')
   , FRESCA = require('fresh-resume-schema')
   , _ = require('underscore')
-  , resumes = require('fresh-test-resumes');
+  , resumes = require('fresh-test-resumes')
+  , freshValidator = require('fresh-resume-validator');
 
 var _rF, _rJ;
-
-
-
-/**
-Determine if the specified FRESH resume is valid.
-# TODO: relocate / refactor
-*/
-function isValidFRESH( r ) {
-  // https://github.com/mafintosh/is-my-json-valid/blob/master/formats.js
-  // Allow YYYY, YYYY-MM, and YYYY-MM-DD date formats
-  // Allow empty string "" or " " etc as URI
-  // TODO: replace this with a validator like `ajv`
-  // TODO: express these format restrictions at the schema level
-  var validate = validator( FRESCA, {
-    formats: {
-      date: /^\d{4}(?:-(?:0[0-9]{1}|1[0-2]{1})(?:-[0-9]{2})?)?$/,
-      uri: /^(?:[a-zA-Z][a-zA-Z0-9+-.]*:[^\s]*)|\s*$/
-    }
-  });
-  var ret = !!validate( r );
-  if( !ret )
-    console.error(validate.errors);
-  return ret;
-}
-
 
 
 /**
@@ -72,7 +48,7 @@ describe('CONVERT', function () {
     _.each( resumes.fresh, function(val, key) {
 
       if( !(typeof val === 'string' || val instanceof String )) { //[1]
-        if( key === "empty" )
+        if( key === "empty" || key === "janeinc" )
           return;
         it( key + ' to JSON Resume format', function () {
           expect(function() {
@@ -80,7 +56,7 @@ describe('CONVERT', function () {
             _rF = CONVERTER.toFRESH( _rJ );
           }).to.not.throw();
 
-          var isvf = isValidFRESH( _rF );
+          var isvf = freshValidator.isValid( _rF );
           var isvj = isValidJRS( _rJ );
           expect(isvf).to.be.true;
           expect(isvj).to.be.true;
@@ -93,7 +69,7 @@ describe('CONVERT', function () {
     _.each( resumes.jrs, function(val, key) {
 
       if( !(typeof val === 'string' || val instanceof String )) {//[1]
-        if( key === "empty" )
+        if( key === "empty" || key === "janeinc" )
           return;
         it( key + ' to FRESH format', function () {
           expect(function() {
@@ -101,7 +77,7 @@ describe('CONVERT', function () {
             _rJ = CONVERTER.toJRS( _rF, null, "0" );
           }).to.not.throw();
 
-          var isvf = isValidFRESH( _rF );
+          var isvf = freshValidator.isValid( _rF );
           var isvj = isValidJRS( _rJ );
           expect(isvf).to.be.true;
           expect(isvj).to.be.true;
