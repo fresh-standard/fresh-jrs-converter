@@ -9,7 +9,7 @@ var chai = require('chai')
   , should = chai.should()
   , CONVERTER = require('../src/index')
   , validator = require('is-my-json-valid')
-  , FRESCA = require('fresca')
+  , FRESCA = require('fresh-resume-schema')
   , _ = require('underscore');
 
 // Get a dossier of test resumes
