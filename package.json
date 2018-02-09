@@ -37,8 +37,10 @@
     "tests"
   ],
   "dependencies": {
+    "extend": "^3.0.1",
     "fresh-resume-schema": "^1.0.0-beta",
     "lodash": "^4.3.0",
+    "moment": "^2.20.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

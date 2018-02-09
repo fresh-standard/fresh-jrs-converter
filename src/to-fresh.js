@@ -7,14 +7,34 @@ Convert JRS resume sections to FRESH.
 (function(){
 
   PKG = require('../package.json');
+  moment = require('moment');
 
   module.exports = {
 
+    // Copy the `meta` property from JRS to FRESH format, preserving any add'l
+    // properties that may be tucked into the object.
     meta: function( r, obj ) {
-      obj = obj || { };
-      obj.format = obj.format || "FRESH@" + PKG.devDependencies.fresca;
-      obj.version = obj.version || "0.1.0";
-      return obj;
+
+      // Copy ALL properties across by default. Tools / users may have inserted
+      // custom properties that we need to preserve.
+      var ret = obj ? _.clone( obj ) : { };
+
+      // Always set the format string for FRESH resumes
+      ret.format = "FRESH@" + PKG.dependencies['fresh-resume-schema'];
+
+      // Conversion always updates the modified timestamp
+      ret.modified = moment().toISOString();
+
+      // lastModified -> modified
+      if (ret.hasOwnProperty('lastModified'))
+        delete ret.lastModified;
+
+      // canonical -> url
+      if( ret.hasOwnProperty('canonical') ) {
+        ret.url = ret.canonical;
+        delete ret.canonical;
+      }
+      return ret;
     },
 
     info: function( r, obj ) {

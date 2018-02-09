@@ -7,6 +7,8 @@ Convert FRESH resume sections to JRS.
 (function(){
 
   _ = require('lodash');
+  moment = require('moment');
+  extend = require('extend');
 
   /**
   A dedicated FRESH-to-JRS resume converter for the latest JRS (1.0.0 candidate)
@@ -14,21 +16,54 @@ Convert FRESH resume sections to JRS.
   */
   module.exports = {
 
+    meta: function( r, obj ) {
+
+      // Copy ALL properties across by default. Tools / users may have inserted
+      // custom properties that we need to preserve.
+      var m = obj ? _.clone( obj ) : { };
+
+      // Conversion always updates the modified timestamp
+      m.lastModified = moment().toISOString();
+
+      // Special handling for certain properties. We could handle
+      // this more elegantly through an object mapper / filter, but
+      // most of the patterns end up being less intelligible so why bother
+
+      // modified -> lastModified
+      if( m.hasOwnProperty('modified') )
+        delete m.modified;
+
+      // canonical -> url
+      if( m.hasOwnProperty('url') ) {
+        m.canonical = m.url;
+        delete m.url;
+      }
+
+      // remove `FRESH@x.y.z` format property on JRS resumes
+      delete m.format;
+
+      return m;
+    },
+
     basics: function( r ) {
-      var that = this;
-      return {
-        name: r.name,
-        label: _.get( r, 'info.label' ),
-        class: _.get( r, 'info.class' ),
-        summary: _.get( r, 'info.brief' ),
-        website: _.get( r, 'contact.website' ),
-        phone: _.get( r, 'contact.phone' ),
-        email: _.get( r, 'contact.email' ),
-        picture: _.get( r, 'info.image' ),
-        location: that.location( r, r.location ),
-        profiles: that.social( r, r.social ),
-        imp: r.imp
-      };
+      // Preserve all properties from the info and contact subobjects
+      var newBasics = extend( true, { }, r.info, r.contact );
+      // Name
+      newBasics.name = r.name;
+      // Rename 'brief' to 'summary'
+      if(newBasics.hasOwnProperty('brief')) {
+        newBasics.summary = newBasics.brief;
+        delete newBasics.brief;
+      }
+      // Rename 'image' to 'picture'
+      if(newBasics.hasOwnProperty('image')) {
+        newBasics.picture = newBasics.image;
+        delete newBasics.image;
+      }
+      // Transform 'location' & 'profiles'
+      newBasics.location = this.location(r, newBasics.location);
+      newBasics.profiles = this.social(r, r.social);
+      return newBasics;
     },
 
     work: function( r, obj ) {

@@ -57,6 +57,7 @@ describe('CONVERT', function () {
           }).to.not.throw();
 
           var isvf = freshValidator.isValid( _rF );
+          if( !isvf ) console.error(freshValidator.errors);
           var isvj = isValidJRS( _rJ );
           expect(isvf).to.be.true;
           expect(isvj).to.be.true;

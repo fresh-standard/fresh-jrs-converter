@@ -15,6 +15,9 @@ Convert FRESH resume sections to JRS 0.0.16.
 
     basics: function( r ) {
       var that = this;
+      // TODO: Update this logic to carry over additional (legal) properties
+      // in r.info and r.contact. Similarly for the other conversion funcs.
+
       return {
         name: r.name,
         label: _.get( r, 'info.label' ),

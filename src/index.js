@@ -78,9 +78,11 @@ FRESH to JSON Resume conversion routines.
 
         case "0":
           return {
+            //meta: not in this version
             basics: sect.jrs.basics( src ),
             work: sect.jrs.work( src, src.employment ),
             education: sect.jrs.education( src, src.education ),
+            //projects: not in this version
             skills: sect.jrs.skills( src, src.skills ),
             volunteer: sect.jrs.volunteer( src, src.service ),
             awards: sect.jrs.awards( src, src.recognition ),
@@ -93,7 +95,7 @@ FRESH to JSON Resume conversion routines.
         case "1":
         case "edge":
           return {
-            meta: null,
+            meta: sect.jrs.meta( src, src.meta ),
             basics: sect.jrs.basics( src ),
             work: sect.jrs.work( src, src.employment ),
             education: sect.jrs.education( src, src.education ),
