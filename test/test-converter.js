@@ -54,8 +54,8 @@ describe('CONVERT', function () {
           return;
         it( key + ' to JSON Resume format', function () {
           expect(function() {
-            _rJ0 = CONVERTER.toJRS( val, null, "0" );
-            _rJ1 = CONVERTER.toJRS( val, null, "1" );
+            _rJ0 = CONVERTER.toJRS( val );
+            _rJ1 = CONVERTER.toJRS( val, { edge: true } );
             _rF0 = CONVERTER.toFRESH( _rJ0 );
             _rF1 = CONVERTER.toFRESH( _rJ1 );
           }).to.not.throw();
@@ -80,8 +80,8 @@ describe('CONVERT', function () {
         it( key + ' to FRESH format', function () {
           expect(function() {
             _rF0 = CONVERTER.toFRESH( val );
-            _rJ0 = CONVERTER.toJRS( _rF0, null, "0" );
-            _rJ1 = CONVERTER.toJRS( _rF0, null, "1" );
+            _rJ0 = CONVERTER.toJRS( _rF0 );
+            _rJ1 = CONVERTER.toJRS( _rF0, { edge: true } );
           }).to.not.throw();
 
           var isvf = freshValidator.isValid( _rF0 );

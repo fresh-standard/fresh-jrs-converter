@@ -40,7 +40,7 @@ FRESH to JSON Resume conversion routines.
     @method toFresh
     @todo Refactor
     */
-    toFRESH: function( src, foreign ) {
+    toFRESH: function( src ) {
 
       return {
         name: src.basics.name,
@@ -67,53 +67,43 @@ FRESH to JSON Resume conversion routines.
     /**
     Convert from FRESH format to a specific JSON Resume format.
     @param src The source FRESH resume object.
-    @param foreign Currently unused.
-    @param ver The JSON Resume version. If specified, must be "0", "1", or
-    "edge". If omitted, defaults to "edge" (the latest JSON Resume schema).
+    @param opts Options for the transformation.
     @returns The converted resume object in JSON Resume format.
     */
-    toJRS: function( src, foreign, ver ) {
-
-      switch( ver || "edge" ) {
-
-        case "0":
-          return {
-            //meta: not in this version
-            basics: sect.jrs.basics( src ),
-            work: sect.jrs.work( src, src.employment ),
-            education: sect.jrs.education( src, src.education ),
-            //projects: not in this version
-            skills: sect.jrs.skills( src, src.skills ),
-            volunteer: sect.jrs.volunteer( src, src.service ),
-            awards: sect.jrs.awards( src, src.recognition ),
-            publications: sect.jrs.publications( src, src.writing ),
-            interests: src.interests,
-            references: sect.jrs.references( src, src.testimonials ),
-            languages: src.languages
-          };
-
-        case "1":
-        case "edge":
-          return {
-            meta: sect.jrs.meta( src, src.meta ),
-            basics: sect.jrs.basics( src ),
-            work: sect.jrs.work( src, src.employment ),
-            education: sect.jrs.education( src, src.education ),
-            projects: sect.jrs.projects( src, src.projects ),
-            skills: sect.jrs.skills( src, src.skills ),
-            volunteer: sect.jrs.volunteer( src, src.service ),
-            awards: sect.jrs.awards( src, src.recognition ),
-            publications: sect.jrs.publications( src, src.writing ),
-            interests: src.interests,
-            references: sect.jrs.references( src, src.testimonials ),
-            languages: src.languages
-          };
-
-        default:
-          // TODO: error
-          return null;
+    toJRS: function( src, opts ) {
+      opts = opts || { };
+      if( !opts.edge ) {  // Convert to the 0.0.16 official JSON Resume
+        return {
+          //meta: not in this version
+          basics: sect.jrs.basics( src ),
+          work: sect.jrs.work( src, src.employment ),
+          education: sect.jrs.education( src, src.education ),
+          //projects: not in this version
+          skills: sect.jrs.skills( src, src.skills ),
+          volunteer: sect.jrs.volunteer( src, src.service ),
+          awards: sect.jrs.awards( src, src.recognition ),
+          publications: sect.jrs.publications( src, src.writing ),
+          interests: src.interests,
+          references: sect.jrs.references( src, src.testimonials ),
+          languages: src.languages
+        };
       }
-
+      else {              // Convert to the 1.0.0 candidate JSON Resume
+        return {
+          meta: sect.jrs.meta( src, src.meta ),
+          basics: sect.jrs.basics( src ),
+          work: sect.jrs.work( src, src.employment ),
+          education: sect.jrs.education( src, src.education ),
+          projects: sect.jrs.projects( src, src.projects ),
+          skills: sect.jrs.skills( src, src.skills ),
+          volunteer: sect.jrs.volunteer( src, src.service ),
+          awards: sect.jrs.awards( src, src.recognition ),
+          publications: sect.jrs.publications( src, src.writing ),
+          interests: src.interests,
+          references: sect.jrs.references( src, src.testimonials ),
+          languages: src.languages
+        };
+      }
     },
 
 
@@ -144,3 +134,7 @@ FRESH to JSON Resume conversion routines.
 
 
 }());
+
+// [^1]: Ultimately, the converter will convert not just between FRESH and JRS,
+// but between *different versions* of FRESH and JRS. That said, right now
+// both FRESH and JRS versions are a little fuzzy.
