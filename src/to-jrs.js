@@ -61,7 +61,7 @@ Convert FRESH resume sections to JRS.
         delete newBasics.image;
       }
       // Transform 'location' & 'profiles'
-      newBasics.location = this.location(r, newBasics.location);
+      newBasics.location = this.location(r, r.location);
       newBasics.profiles = this.social(r, r.social);
       return newBasics;
     },
